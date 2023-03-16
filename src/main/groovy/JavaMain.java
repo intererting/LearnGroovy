@@ -1,3 +1,5 @@
+import java.util.function.Supplier;
+
 /**
  * author        yiliyang
  * date          2023-02-16
@@ -8,6 +10,10 @@
 public class JavaMain {
     public static void main(String[] args) {
         //        testCodePoint();
+        test(() -> {
+            System.out.println("hello world");
+            return;
+        });
     }
 
     private static void testCodePoint() {
@@ -16,7 +22,9 @@ public class JavaMain {
         System.out.println(new String(c));
     }
 
-    static class Person {
-
+    private static void test(Runnable runnable) {
+        runnable.run();
+        System.out.println("inner");
     }
+
 }

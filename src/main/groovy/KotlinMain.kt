@@ -6,14 +6,20 @@
  * since         1.0
  */
 fun main() {
-//    println("before inline")
-//    testInline {
-//        return
-////        return@testInline
-//    }
-//    println("after inline")
+    println("before")
+    testInline {
+        println("inline block")
+        return@testInline
+    }
+    println("after")
 }
 
-inline fun testInline(func: () -> Unit) {
+/*inline fun testInline(func: () -> Unit) {
     func()
+    println("innine fun")
+}*/
+
+fun testInline(func: () -> Unit) {
+    func()
+    println("innine fun")
 }
