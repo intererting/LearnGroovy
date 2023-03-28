@@ -1,5 +1,5 @@
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import java.io.InputStream
 
 /*
 author        yiliyang
@@ -11,7 +11,7 @@ since         1.0
 val myThreadLocal = ThreadLocal<String?>()
 
 fun main() {
-    testThreadLocal()
+//    testThreadLocal()
 }
 
 fun testThreadLocal() {

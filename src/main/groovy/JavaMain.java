@@ -1,5 +1,6 @@
 import org.apache.tools.ant.taskdefs.Local;
 
+import java.io.InputStream;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
