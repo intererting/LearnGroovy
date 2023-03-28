@@ -11,7 +11,7 @@ since         1.0
 val myThreadLocal = ThreadLocal<String?>()
 
 fun main() {
-//    testThreadLocal()
+    testThreadLocal()
 }
 
 fun testThreadLocal() {
