@@ -15,19 +15,22 @@ fun main() {
         println("cHandler $throwable")
     }
     coroutineScope.launch(cHandler) {
-        println(Thread.currentThread())
-        println(coroutineContext[kotlin.coroutines.ContinuationInterceptor])
+//        println(Thread.currentThread())
+//        println(coroutineContext[kotlin.coroutines.ContinuationInterceptor])
         val result = suspendCancellableCoroutine<String> { continuation ->
-            continuation.invokeOnCancellation {
-                println("invokeOnCancellation")
-            }
-            println(Thread.currentThread())
+//            continuation.invokeOnCancellation {
+//                println("invokeOnCancellation")
+//            }
+//            println(Thread.currentThread())
 //                continuation.cancel(java.lang.RuntimeException("error"))
-            continuation.resume("success") {
-                println("throwable $it")
+            launch {
+                delay(4000)
+                continuation.resume("success") {
+                    println("throwable $it")
+                }
             }
             println("after resume")
-            Thread.sleep(5000)
+//            Thread.sleep(5000)
         }
         println(result)
     }
