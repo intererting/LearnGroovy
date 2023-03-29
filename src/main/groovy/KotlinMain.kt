@@ -12,6 +12,60 @@ val myThreadLocal = ThreadLocal<String?>()
 
 fun main() {
 //    testThreadLocal()
+
+//    println(fibo(10))
+
+    /* for (v in fib1().take(10)) {
+         println(v)
+     }*/
+
+//    for (v in fib2().take(10)) {
+//        println(v)
+//    }
+
+//    println(stackFun(10))
+
+}
+
+val stackFun = DeepRecursiveFunction<Long, Long> {
+    val result = if (it in 0..1) {
+        it
+    } else {
+        callRecursive(it - 1) + callRecursive(it - 2)
+    }
+    return@DeepRecursiveFunction result
+}
+
+tailrec fun fibo(n: Int, a: Long = 0, b: Long = 1): Long {
+    println(a)
+    if (n == 0) {
+        return a
+    }
+    return fibo(n - 1, b, a + b)
+}
+
+fun fib1() = sequence {
+    var a = 0
+    var b = 1
+    while (true) {
+        yield(a.toLong())
+        a = b.also {
+            b = a + it
+        }
+    }
+}
+
+fun fib2() = sequence {
+    val fibList = mutableListOf(0, 1)
+    var index = 0
+    while (true) {
+        if (index in 0..1) {
+            yield(index++)
+        } else {
+            fibList.add(fibList[index - 1] + fibList[index - 2])
+            yield(fibList[index++])
+        }
+    }
 }
 
 fun testThreadLocal() {
