@@ -1,4 +1,6 @@
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.flow
 import java.io.InputStream
 
 /*
@@ -24,7 +26,6 @@ fun main() {
 //    }
 
 //    println(stackFun(10))
-
 }
 
 val stackFun = DeepRecursiveFunction<Long, Long> {
@@ -114,4 +115,3 @@ fun testInlineBlock() {
     }
     println("after")
 }
-

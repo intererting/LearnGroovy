@@ -24,7 +24,9 @@ public class JavaMain {
     public static void main(String[] args) {
         //        testCodePoint();
         //        generic();
-        timeApi();
+        //        timeApi();
+        Object[] a = new Object[3];
+        System.out.println(a.length);
     }
 
     private static void timeApi() {
@@ -61,6 +63,24 @@ public class JavaMain {
 
 }
 
-class A {}
+class JavaFather {
 
-class B extends A {}
+}
+
+class JavaSon extends JavaFather {}
+
+
+class A {
+
+    public void test(JavaFather father) {
+
+    }
+
+}
+
+class B extends A {
+    @Override
+    public void test(JavaFather father) {
+        super.test(father);
+    }
+}
