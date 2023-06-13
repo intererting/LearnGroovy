@@ -1,3 +1,8 @@
+import com.google.common.util.concurrent.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import org.apache.tools.ant.taskdefs.Local;
 
 import java.io.InputStream;
@@ -11,6 +16,8 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 /**
@@ -25,8 +32,43 @@ public class JavaMain {
         //        testCodePoint();
         //        generic();
         //        timeApi();
-        Object[] a = new Object[3];
-        System.out.println(a.length);
+        //        Object[] a = new Object[3];
+        //        System.out.println(a.length);
+        //        future();
+        gson();
+    }
+
+    private static void gson() {
+        //        String  json    = "{\"name\":\"yuliyang\"}";
+        String json = "{\"name\":3}";
+        Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(new SuperclassExclusionStrategy())
+                .addSerializationExclusionStrategy(new SuperclassExclusionStrategy()).create();
+        JavaSon javaSon = gson.fromJson(json, JavaSon.class);
+        System.out.println(javaSon.getName());
+    }
+
+    private static void future() {
+        ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
+        ListenableFuture<String> explosion = service.submit(new Callable<String>() {
+            public String call() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                return "hello world";
+            }
+        });
+        Futures.addCallback(explosion, new FutureCallback<String>() {
+            // we want this handler to run immediately after we push the big red button!
+            public void onSuccess(String explosion) {
+                System.out.println("success " + explosion);
+            }
+
+            public void onFailure(Throwable thrown) {
+                System.out.println(thrown.getMessage());
+            }
+        }, service);
     }
 
     private static void timeApi() {
@@ -55,32 +97,21 @@ public class JavaMain {
         char[] c = Character.toChars(s.codePointAt(4));
         System.out.println(new String(c));
     }
-
-    private static void test(Runnable runnable) {
-        runnable.run();
-        System.out.println("inner");
-    }
-
 }
 
 class JavaFather {
 
-}
+    private String name;
 
-class JavaSon extends JavaFather {}
-
-
-class A {
-
-    public void test(JavaFather father) {
-
-    }
-
-}
-
-class B extends A {
-    @Override
-    public void test(JavaFather father) {
-        super.test(father);
+    public String getName() {
+        return name;
     }
 }
+
+class JavaSon extends JavaFather {
+
+    @SerializedName("name")
+    private Integer name;
+}
+
+

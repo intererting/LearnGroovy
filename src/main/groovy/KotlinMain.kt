@@ -26,6 +26,22 @@ fun main() {
 //    }
 
 //    println(stackFun(10))
+    myThreadLocal.set("init")
+
+    for (i in 0..100000) {
+        threadLocal()
+    }
+    Thread.sleep(10000)
+}
+
+fun threadLocal() {
+    GlobalScope.launch {
+        withContext(myThreadLocal.asContextElement("changed")) {
+        }
+        if (null != myThreadLocal.get()) {
+            println("error")
+        }
+    }
 }
 
 val stackFun = DeepRecursiveFunction<Long, Long> {
